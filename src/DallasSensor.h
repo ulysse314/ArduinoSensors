@@ -26,8 +26,9 @@ public:
 
   DallasSensor(const OneWire::Address adress, OneWire *oneWire);
 
-  float celsius() const { return _celsius; };
+  float celsius() const { return _temperature; };
   bool hasValue() const { return _hasValue; };
+  bool waitingForValue() const { return _waitingForValue; };
 
   // sensor
   const char *sensorClass() const override { return "DALLAS"; };
@@ -40,12 +41,12 @@ private:
   void sendConvertCommand();
   void sendReadCommand();
 
-  OneWire *_oneWire;
-  OneWire::Address _address;
+  OneWire *const _oneWire;
+  const OneWire::Address _address;
   bool _hasValue;
-  float _celsius;
-  unsigned long _timer;
-  bool _tried;
+  bool _waitingForValue;
+  float _temperature;
+  unsigned long long _timer;
 };
 
 #endif // DallasSensor_h

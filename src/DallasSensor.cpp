@@ -42,7 +42,8 @@ DallasSensor::DallasSensor(const OneWire::Address address, OneWire *oneWire) :
     _oneWire(oneWire),
     _address(address),
     _hasValue(false),
-    _celsius(0),
+    _waitingForValue(false),
+    _temperature(0),
     _timer(0) {
 }
 
@@ -95,25 +96,27 @@ void DallasSensor::sendReadCommand() {
     else if (cfg == 0x40) raw = raw << 1; // 11 bit res, 375 ms
     // default is 12 bit resolution, 750 ms conversion time
   }
-  _celsius = (float)raw / 16.0;
+  _temperature = (float)raw / 16.0;
   _hasValue = OneWire::crc8(data, 8) == data[8];
 }
 
 bool DallasSensor::readValues() {
+  if (_waitingForValue) {
+    return true;
+  }
   this->sendConvertCommand();
   _timer = millis();
-  _hasValue = false;
-  _tried = false;
+  _waitingForValue = true;
   return true;
 }
 
 void DallasSensor::loop() {
-  if (_tried) {
+  if (!_waitingForValue) {
     return;
   }
   unsigned long currentTime = millis();
   if ((unsigned long)(currentTime - _timer) >= 800) {
     this->sendReadCommand();
-    _tried = true;
+    _waitingForValue = false;
   }
 }
