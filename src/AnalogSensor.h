@@ -7,14 +7,16 @@
 
 class AnalogSensor : public Sensor {
 public:
-  AnalogSensor(uint32_t pin);
+  AnalogSensor(uint8_t pin);
 
   const char *sensorClass() const override { return "AnalogSensor"; };
   void begin() override;
   bool readValues() override;
 
+  uint32_t value() const { return _value; };
+
 protected:
-  uint32_t _pin = 0;
+  const uint8_t _pin = 0;
   uint32_t _value = 0;
 };
 

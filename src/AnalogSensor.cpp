@@ -2,8 +2,8 @@
 
 #include <Arduino.h>
 
-AnalogSensor::AnalogSensor(uint32_t pin) {
-  _pin = pin;
+AnalogSensor::AnalogSensor(uint8_t pin) :
+    _pin(pin) {
 }
 
 void AnalogSensor::begin() {
