@@ -87,7 +87,8 @@ bool SensorList::readValues() {
   SensorBucket *bucketCursor = _sensorBucket;
 
   while (bucketCursor) {
-    result = bucketCursor->sensor->readValues() && result;
+    bool sensorResult = bucketCursor->sensor->readValues();
+    result = sensorResult && result;
     bucketCursor = bucketCursor->nextBucket;
   }
   return result;
