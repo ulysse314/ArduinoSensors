@@ -17,7 +17,7 @@ public:
 
 protected:
   const uint8_t _pin = 0;
-  uint32_t _value = 0;
+  uint32_t _value = -1;
 };
 
 #endif // AnalogSensor_h

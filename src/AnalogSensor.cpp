@@ -8,6 +8,7 @@ AnalogSensor::AnalogSensor(uint8_t pin) :
 
 void AnalogSensor::begin() {
   pinMode(_pin, INPUT);
+  readValues();
 }
 
 bool AnalogSensor::readValues() {
