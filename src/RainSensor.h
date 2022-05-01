@@ -12,6 +12,7 @@ class RainSensor : public Sensor {
     const char *sensorClass() const override { return "RainSensor"; };
     void begin() override;
     bool readValues() override;
+    void loop() override;
 
     float getTemperature() const { return _temperature; };
     unsigned long long getRainValue() const { return _rainValue; };
@@ -31,6 +32,7 @@ class RainSensor : public Sensor {
     bool _heat;
     float _temperature;
     unsigned long long _rainValue;
+    unsigned long _heatDate;
 };
 
 #endif  // RainSensor_h
