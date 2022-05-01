@@ -8,9 +8,15 @@ DigitalSensor::DigitalSensor(uint8_t pin) :
 
 void DigitalSensor::begin() {
   pinMode(_pin, INPUT);
+  readValues();
+}
+
+void DigitalSensor::loop() {
+  readValues();
 }
 
 bool DigitalSensor::readValues() {
+  _previousValue = _value;
   _value = digitalRead(_pin);
   return true;
 }
